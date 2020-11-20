@@ -1,0 +1,17 @@
+<%= form_with(model: strava, local: true) do |form| %>
+  <% if strava.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(strava.errors.count, "error") %> prohibited this strava from being saved:</h2>
+
+      <ul>
+        <% strava.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
