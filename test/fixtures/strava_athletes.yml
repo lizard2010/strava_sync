@@ -1,0 +1,66 @@
+# == Schema Information
+#
+# Table name: strava_athletes
+#
+#  id             :bigint           not null, primary key
+#  city           :string
+#  country        :string
+#  firstname      :string
+#  follower       :string
+#  friend         :string
+#  lastname       :string
+#  premium        :boolean
+#  profile        :string
+#  profile_medium :string
+#  resource_state :integer
+#  sex            :string
+#  state          :string
+#  summit         :boolean
+#  username       :string
+#  created_at     :datetime
+#  updated_at     :datetime
+#  badge_type_id  :integer
+#  strava_id      :integer
+#
+# Indexes
+#
+#  index_strava_athletes_on_strava_id  (strava_id) UNIQUE
+#
+
+one:
+  strava_id: 1
+  resource_state: 1
+  firstname: MyString
+  lastname: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  sex: MyString
+  premium: false
+  summit: false
+  created_at: 2020-11-20 16:54:36
+  updated_at: 2020-11-20 16:54:36
+  badge_type_id: 1
+  profile_medium: MyString
+  profile: MyString
+  friend: MyString
+  follower: MyString
+
+two:
+  strava_id: 1
+  resource_state: 1
+  firstname: MyString
+  lastname: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  sex: MyString
+  premium: false
+  summit: false
+  created_at: 2020-11-20 16:54:36
+  updated_at: 2020-11-20 16:54:36
+  badge_type_id: 1
+  profile_medium: MyString
+  profile: MyString
+  friend: MyString
+  follower: MyString
