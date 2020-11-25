@@ -2,16 +2,17 @@
 #
 # Table name: stravas
 #
-#  id            :bigint           not null, primary key
-#  access_token  :string
-#  code          :string
-#  expires_at    :integer
-#  expires_in    :integer
-#  refresh_token :string
-#  scope         :string
-#  state         :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                :bigint           not null, primary key
+#  access_token      :string
+#  code              :string
+#  expires_at        :integer
+#  expires_in        :integer
+#  refresh_token     :string
+#  scope             :string
+#  state             :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  strava_athlete_id :integer
 #
 require 'test_helper'
 

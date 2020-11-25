@@ -1,10 +1,19 @@
 class StravaController < ApplicationController
-  before_action :set_strava, only: [:show, :edit, :update, :destroy]
+  before_action :set_strava, only: %i[show edit update destroy]
 
-  # GET /strava
-  def index 
-    detect_call
-    # ap strava_params
+  def index
+    strava_default
+  end
+
+  # GET /strava/code
+  def code
+    strava = Strava.new(strava_code_params)
+    response = JSON.parse strava.get_authorization_token.body
+    ap response
+    athlete = StravaAthlete.create_from_json(response['athlete'].symbolize_keys!)
+    ap athlete
+    strava.update(response.slice(*Strava::STRAVA_TOKENS))
+    strava
   end
 
   # POST /stravas
@@ -48,40 +57,23 @@ class StravaController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_strava
-      @strava = Strava.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def strava_params
-      params.fetch(:strava, {})
-    end
-    
-    def strava_code_params
-      params.permit(Strava::STRAVA_CALL_CODE.map(&:to_sym))
-    end 
-    
-    def detect_call
-      return strava_code if ((Strava::STRAVA_CALL_CODE & params.keys) == Strava::STRAVA_CALL_CODE)
-      strava_default
-    end
-    
-    
-    def strava_code
-      ap :strava_code 
-      strava = Strava.create(strava_code_params)
-      ap strava
-      response = JSON.parse strava.get_authorization_token.body
-      ap response
-      ap response.slice(*Strava::STRAVA_TOKENS)      
-      strava.update(response.slice(*Strava::STRAVA_TOKENS))
-      ap strava
-    end
-    
-    def strava_default
-      @strava_grant_request_url = Strava.grant_request_url
-    end  
-    
-    
+  # Use callbacks to share common setup or constraints between actions.
+  def set_strava
+    @strava = Strava.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def strava_params
+    params.fetch(:strava, {})
+  end
+
+  def strava_code_params
+    params.permit(Strava::STRAVA_CALL_CODE.map(&:to_sym))
+  end
+
+
+  def strava_default
+    @strava_grant_request_url = Strava.grant_request_url
+  end
 end
