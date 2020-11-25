@@ -55,3 +55,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'awesome_print'
 gem 'rest-client'
 gem 'annotate'
+gem 'rubocop'
