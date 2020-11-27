@@ -8,12 +8,15 @@ class StravaController < ApplicationController
   # GET /strava/code
   def code
     strava = Strava.new(strava_code_params)
-    response = JSON.parse strava.get_authorization_token.body
-    ap response
-    athlete = StravaAthlete.create_from_json(response['athlete'].symbolize_keys!)
-    ap athlete
+    response = JSON.parse strava.get_authorization_token, symbolize_names: true
+    redirect_to('/', notice: strava.error_catch(response)) if strava.error_catch(response)
+
+    return unless response[:athlete].present?
+
+    strava = strava.save_athlete(response[:athlete])
     strava.update(response.slice(*Strava::STRAVA_TOKENS))
-    strava
+    strava.save!
+    redirect_to strava, notice: 'Strava Athlete was successfully added/updated.'
   end
 
   # POST /stravas
@@ -71,7 +74,6 @@ class StravaController < ApplicationController
   def strava_code_params
     params.permit(Strava::STRAVA_CALL_CODE.map(&:to_sym))
   end
-
 
   def strava_default
     @strava_grant_request_url = Strava.grant_request_url

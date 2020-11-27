@@ -14,6 +14,10 @@
 #  updated_at        :datetime         not null
 #  strava_athlete_id :integer
 #
+# Indexes
+#
+#  index_stravas_on_strava_athlete_id  (strava_athlete_id) UNIQUE
+#
 require 'test_helper'
 
 class StravaTest < ActiveSupport::TestCase

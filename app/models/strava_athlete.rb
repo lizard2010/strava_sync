@@ -31,6 +31,6 @@ class StravaAthlete < ApplicationRecord
 
   def self.create_from_json(data)
     data[:strava_id] = data.delete(:id)
-    create_or_find_by(data)
+    find_or_initialize_by(data)
   end
 end
